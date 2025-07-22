@@ -4,7 +4,7 @@ on: [push] # Bu robot ne zaman çalışsın? Projeye her kod yüklendiğinde (pu
 
 jobs:
   basit_cikti_ver: # Bu işin (job'ın) adı
-    runs-on: ubuntu-latest # Bu iş, GitHub'ın sağladığı en güncel Ubuntu bilgisayarında çalışacak.
+    runs-on: self-hosted 
 
     steps:
       - name: Depo Kodunu İndir # Bu adım, projenin kodlarını robotun çalıştığı bilgisayara indirir.
