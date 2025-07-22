@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMI Çarkı</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      PMI TÜRKİYE CHAPTER
+      <img src="images/pmi-logo.png" alt="PMI Logo" class="pmi-logo" onerror="this.style.display='none';" />
+    </div>
+    <div class="header-right">PMI ÇARKI</div>
+  </header>
+  <main id="main-content">
+    <div class="wheel-container">
+      <canvas id="wheel" width="650" height="650"></canvas>
+      <button id="spin-btn">Çarkı Çevir</button>
+    </div>
+    <div class="winner-container">
+      <div id="countdown" class="countdown"></div>
+      <div id="winner" class="winner-message"></div>
+    </div>
+    <aside class="participants-panel" id="participants-panel">
+      <h2>Katılımcı Ekle</h2>
+      <form id="participant-form">
+        <input type="text" id="participant-name" placeholder="Ad Soyad" required />
+        <button type="submit">Ekle</button>
+      </form>
+    </aside>
+    <button id="toggle-panel-btn" class="toggle-panel-btn">Katılımcı Ekle</button>
+  </main>
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+  <script src="js/app.js"></script>
+</body>
+</html> 

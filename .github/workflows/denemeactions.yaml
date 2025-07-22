@@ -1,0 +1,14 @@
+name: Yeni Deneme Actions Robotu # GitHub Actions listesinde görünecek isim
+
+on: [push] # Bu robot ne zaman çalışsın? Projeye her kod yüklendiğinde (push edildiğinde) çalış.
+
+jobs:
+  basit_cikti_ver: # Bu işin (job'ın) adı
+    runs-on: ubuntu-latest # Bu iş, GitHub'ın sağladığı en güncel Ubuntu bilgisayarında çalışacak.
+
+    steps:
+      - name: Depo Kodunu İndir # Bu adım, projenin kodlarını robotun çalıştığı bilgisayara indirir.
+        uses: actions/checkout@v4
+
+      - name: Merhaba Mesajı Yazdır # Bu adım, terminale bir mesaj yazdıracak.
+        run: echo "Yeni GitHub Actions robotum başarıyla çalıştı!"
