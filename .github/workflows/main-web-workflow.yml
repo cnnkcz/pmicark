@@ -1,0 +1,16 @@
+name: Web Projesi Ana Workflow # GitHub Actions listesinde görünecek isim
+
+on: [push] # Bu robot ne zaman çalışsın? Projeye her kod yüklendiğinde (push edildiğinde) çalışsın.
+
+jobs:
+  web_hazirlik_ve_kontrol: # Bu işin (job'ın) adı
+    runs-on: self-hosted # Bu işi kendi kurduğumuz runner'da çalıştıracağız
+
+    steps:
+      - name: Proje Kodunu İndir # Projenin kodlarını robotun çalıştığı bilgisayara indir.
+        uses: actions/checkout@v4
+
+      - name: Web Projesi Hazırlık Adımlarını Çalıştır # <<< İşte burada Composite Action'ımızı çağırıyoruz!
+        uses: ./.github/actions/web-project-prepare # Kendi Composite Action'ımızın yolu
+        with: # Composite Action'ımıza girdi (input) sağlıyoruz
+          message: 'Custom mesaj: Ana workflow, Composite Action ile çalıştı!' # inputs.message'e özel değer gönderdik
