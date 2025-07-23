@@ -1,0 +1,34 @@
+# .github/actions/web-project-prepare/action.yml
+name: 'Basit Web Projesi Hazırlık Adımları' # Bu Composite Action'ın görünen adı
+description: 'HTML, CSS ve JS projesi için basit hazırlık ve kontrol adımları.' # Kısa açıklama
+
+inputs: # Bu Action'ın dışarıdan alabileceği girdiler (parametreler)
+  message: # 'message' adında bir girdi tanımlıyoruz
+    description: 'Gösterilecek özel mesaj'
+    required: false # Bu girdi zorunlu değil
+    default: 'Web projesi hazırlık adımları tamamlandı.' # Varsayılan değeri
+
+runs: # Bu Composite Action çalıştığında neler olacak
+  using: "composite" # Bunun bir Composite Action olduğunu belirtiriz
+  steps: # Çalışacak adımlar sırasıyla buraya yazılır
+
+    - name: Proje Dosyalarını Kontrol Et # Adım 1: Mevcut dosyalar hakkında bilgi ver
+      run: | # Birden fazla komutu çalıştırmak için | (pipe) kullanırız
+        echo "Mevcut dosyalar:"
+        ls -la # Linux/macOS runner'da dosyaları listeler (GitHub-hosted veya WSL'li kendi runner'ın için)
+        # Eğer Windows PowerShell runner'da çalışıyorsa ve ls -la hata verirse, yukarıdaki satırı silip alttakini kullanabilirsin:
+        # dir /b
+      shell: bash # Bu komutun hangi shell'de çalışacağını belirtiriz
+
+    - name: Hazırlık Mesajını Yazdır # Adım 2: Özel mesajı yazdır
+      run: echo "${{ inputs.message }}" # inputs.message girdisini kullanıyoruz
+      shell: bash
+
+    - name: Basit Kontrol Adımı # Adım 3: Ek bir kontrol (örneğin, belirli bir HTML dosyası var mı?)
+      run: |
+        if [ -f "index.html" ]; then
+          echo "index.html bulundu! "
+        else
+          echo "index.html bulunamadı! "
+        fi
+      shell: bash
