@@ -1,0 +1,24 @@
+# Dosya Yolu: .github/workflows/call-reusable-workflow.yml
+name: Reusable Workflow Çağırma Ana Workflow # GitHub Actions listesinde görünecek isim
+
+on: [push] # Bu workflow her 'push' işleminde çalışacak
+
+jobs:
+  call_reusable_workflow_job: # Bu job, Reusable Workflow'u çağıracak
+    runs-on: self-hosted # Bu job'ı kendi runner'ımızda çalıştıracağız
+
+    steps:
+      - name: Proje Kodunu İndir # Reusable Workflow'un çalışabilmesi için kodu indirmeliyiz
+        uses: actions/checkout@v4
+
+      - name: Mesaj Günlüğü Reusable Workflow'u Çağır # <<< İşte burada Reusable Workflow'u çağırıyoruz!
+        uses: ./.github/workflows/log-message-reusable.yml # Kendi Reusable Workflow'umuzun yolu
+        with: # Reusable Workflow'a girdi (input) sağlıyoruz
+          log_message: 'Bu mesaj, ana workflowdan Reusable Workflowa gönderildi!' # log_message girdisine değer gönderdik
+
+        id: reusable_call # Bu adımın çıktısını almak için bir ID veriyoruz
+
+      - name: Reusable Workflow Çıktısını Göster # Reusable Workflow'dan gelen çıktıyı göster
+        run: |
+          echo "Reusable Workflow'dan gelen durum çıktısı: ${{ steps.reusable_call.outputs.output_status }}"
+        shell: bash
