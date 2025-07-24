@@ -1,0 +1,33 @@
+# Dosya Yolu: .github/workflows/log-message-reusable.yml
+name: Mesaj Günlüğü (Tekrar Kullanılabilir) # GitHub Actions arayüzünde görünecek isim
+
+# Bu anahtar kelime, bu workflow'un başka bir workflow tarafından çağrılabileceğini belirtir.
+on:
+  workflow_call:
+    inputs: # Bu Reusable Workflow'un dışarıdan alabileceği girdileri tanımlıyoruz
+      log_message: # 'log_message' adında bir girdi
+        description: 'Loga yazdırılacak mesaj'
+        required: true # Bu girdinin zorunlu olduğunu belirtiriz
+        type: string # Girdi türünün string (metin) olduğunu belirtiriz
+
+    outputs: # Bu Reusable Workflow'un dışarıya verebileceği çıktıları tanımlıyoruz
+      output_status: # 'output_status' adında bir çıktı
+        description: 'Mesaj yazdırma işleminin durumu'
+        value: ${{ jobs.print_log_job.outputs.job_status }} # 'print_log_job' adlı job'dan gelen 'job_status' çıktısını alır
+
+jobs: # Bu Reusable Workflow'un içindeki işler (job'lar)
+  print_log_job: # Reusable workflow'un içindeki tek job'ımızın adı
+    runs-on: self-hosted # Bu job'ı kendi runner'ımızda çalıştıracağız
+
+    outputs: # Bu job'ın kendi dışarıya verebileceği çıktıları tanımlarız (bu çıktılar üstteki workflow outputs'una bağlanacak)
+      job_status: # 'job_status' adında bir job çıktısı
+        value: 'Mesaj başarıyla loglandı' # Varsayılan çıktı değeri
+
+    steps: # Bu job'ın adımları
+      - name: Log Mesajını Yazdır # Adım: Gelen mesajı terminale yazdır
+        run: |
+          echo "Reusable Workflow'dan gelen mesaj: ${{ inputs.log_message }}" # inputs.log_message girdisini kullanırız
+          # Aşağıdaki satır, bu adımın/job'ın bir çıktı vermesini sağlar.
+          # Bu çıktı, yukarıdaki job.outputs ve workflow.outputs tarafından kullanılacak.
+          echo "::set-output name=job_status::Mesaj başarıyla yazdırıldı"
+        shell: PowerShell

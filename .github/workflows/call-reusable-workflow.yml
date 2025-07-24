@@ -21,4 +21,4 @@ jobs:
       - name: Reusable Workflow Çıktısını Göster # Reusable Workflow'dan gelen çıktıyı göster
         run: |
           echo "Reusable Workflow'dan gelen durum çıktısı: ${{ steps.reusable_call.outputs.output_status }}"
-        shell: bash
+        shell: PowerShell

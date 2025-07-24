@@ -31,4 +31,4 @@ runs: # Bu Composite Action çalıştığında neler olacak
         else
           echo "index.html bulunamadı! "
         fi
-      shell: bash
+      shell: PowerShell
